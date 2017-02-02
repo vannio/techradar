@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Techradar &mdash; Battery Test</title>
+    <style>
+      #main-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="main-content"></iframe>
+    <script type="text/javascript">
+      var current = 1;
+      var sites = [
+        'http://www.techradar.com/',
+        'http://www.t3.com/',
+        'http://www.gizmodo.co.uk/',
+        'http://www.lifehacker.co.uk/',
+        'http://www.gamesradar.com/',
+        'http://www.lingscars.com/'
+      ];
+
+      function setSrc(i) {
+        document.getElementById('main-content').src = sites[i];
+        reload();
+      };
+
+      function getQueryParams(qs) {
+        qs = qs.split('+').join(' ');
+        var params = {},
+            tokens,
+            re = /[?&]?([^=]+)=([^&]*)/g;
+        while (tokens = re.exec(qs)) {
+          params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
+        return params;
+      };
+
+      function reload() {
+        setTimeout(function () {
+          current = current < sites.length ? current + 1 : 1;
+          setSrc(current - 1);
+        }, duration);
+      }
+
+      var params = getQueryParams(window.location.search.substring(1));
+      var duration = params['seconds'] * 1000;
+      setSrc(current);
+    </script>
+  </body>
+</html>
