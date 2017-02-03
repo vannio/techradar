@@ -19,7 +19,7 @@
   <body>
     <iframe id="main-content"></iframe>
     <script type="text/javascript">
-      var current = 1;
+      var current = 0;
       var sites = [
         'http://www.techradar.com/',
         'http://www.t3.com/',
@@ -46,14 +46,15 @@
       };
 
       function reload() {
+        var params = getQueryParams(window.location.search.substring(1));
+        var seconds = params['seconds'] || 10;
+
         setTimeout(function () {
-          current = current < sites.length ? current + 1 : 1;
-          setSrc(current - 1);
-        }, duration);
+          current = current < sites.length - 1 ? current + 1 : 0;
+          setSrc(current);
+        }, seconds * 1000);
       }
 
-      var params = getQueryParams(window.location.search.substring(1));
-      var duration = params['seconds'] * 1000;
       setSrc(current);
     </script>
   </body>
